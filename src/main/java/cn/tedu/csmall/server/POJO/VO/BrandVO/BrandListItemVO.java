@@ -5,7 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.Objects;
 @Data
-public class BrandDetailVO implements Serializable {
+public class BrandListItemVO implements Serializable {
 
     private Long id;
     private String name;
@@ -20,4 +20,4 @@ public class BrandDetailVO implements Serializable {
     private Integer positiveCommentCount;
     private Integer enable;
 
-}
+   }

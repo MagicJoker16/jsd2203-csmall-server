@@ -84,13 +84,52 @@
 
     </select>
 
-    <select id="getById" resultType="cn.tedu.csmall.server.POJO.VO.BrandVO.BrandDetailVO">
-        SELECT id,name,pinyin,logo, description, keywords,
-               sort,sales,product_count, comment_count,
-               positive_comment_count,enable
+    <select id="getById" resultMap="DetailResultMap">
+        SELECT
+            <include refid="DetailQueryFields"/>
         FROM
-             pms_brand
+            pms_brand
         WHERE
-              id = #{id}
+            id = #{id}
     </select>
+
+    <select id="list" resultMap="ListItemResultMap">
+        SELECT
+            <include refid="ListItemQueryFields"/>
+        FROM
+            pms_brand
+        ORDER BY id
+    </select>
+
+    <sql id="DetailQueryFields">
+        <if test="true">
+            id, name, pinyin, logo, description,
+            keywords, sort, sales, product_count, comment_count,
+            positive_comment_count, enable
+        </if>
+    </sql>
+
+    <resultMap id="DetailResultMap" type="cn.tedu.csmall.server.POJO.VO.BrandVO.BrandDetailVO">
+        <id column="id" property="id"/>
+        <result column="product_count" property="productCount"/>
+        <result column="comment_count" property="commentCount"/>
+        <result column="positive_comment_count" property="positiveCommentCount"/>
+    </resultMap>
+
+    <sql id="ListItemQueryFields">
+        <if test="true">
+            id, name, pinyin, logo, description,
+            keywords, sort, sales, product_count, comment_count,
+            positive_comment_count, enable
+        </if>
+    </sql>
+
+    <resultMap id="ListItemResultMap" type="cn.tedu.csmall.server.POJO.VO.BrandVO.BrandListItemVO">
+        <id column="id" property="id"/>
+        <result column="product_count" property="productCount"/>
+        <result column="comment_count" property="commentCount"/>
+        <result column="positive_comment_count" property="positiveCommentCount"/>
+    </resultMap>
+
+
 </mapper>

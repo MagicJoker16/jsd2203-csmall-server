@@ -82,9 +82,11 @@ public class BrandMapperTests {
     }
     @Test
     public void testGetById() {
-        Long id = 800L;
+        Long id = 8L;
         BrandDetailVO brandDetailVO = mapper.getById(id);
         System.out.println("根据id=" + id + "查询完成，结果=" + brandDetailVO);
     }
+
+
 
 }

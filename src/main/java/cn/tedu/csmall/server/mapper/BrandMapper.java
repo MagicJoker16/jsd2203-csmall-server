@@ -1,9 +1,12 @@
 package cn.tedu.csmall.server.mapper;
 
 import cn.tedu.csmall.server.POJO.VO.BrandVO.BrandDetailVO;
+import cn.tedu.csmall.server.POJO.VO.BrandVO.BrandListItemVO;
 import cn.tedu.csmall.server.POJO.entity.Brand;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 
 @Repository//让测试类不报错
@@ -57,6 +60,8 @@ public interface BrandMapper {
      * @return 匹配的品牌详情，如果没有匹配的数据，将返回null
      */
     BrandDetailVO getById(Long id);
+
+    List<BrandListItemVO> list();
 
 
 }
