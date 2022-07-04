@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--根节点名必须是mapper
+    根节点必须配置 namespace 属性 取值为对应的接口的全限定名
+    在根节点内部 根据需要执行的SQL语的类型不同 使用 inset delete update select
+
+-->
+<mapper namespace="cn.tedu.csmall.server.mapper.SkuSpecificationMapper">
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_sku_specification(sku_id, attribute_id, attribute_name, attribute_value, unit,
+                                          sort, gmt_create, gmt_modified)
+        values (#{skuId}, #{attributeId}, #{attributeName}, #{attributeValue}, #{unit},
+                #{sort},  #{gmtCreate}, #{gmtModified})
+    </insert>
+    <delete id="deleteById">
+        delete
+        from pms_sku_specification
+        where id = #{id}
+    </delete>
+    <delete id="deleteByIds">
+        from pms_sku_specification
+        where id in(
+        <foreach collection="array" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+    </delete>
+
+
+</mapper>

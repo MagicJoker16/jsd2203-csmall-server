@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--根节点名必须是mapper
+    根节点必须配置 namespace 属性 取值为对应的接口的全限定名
+    在根节点内部 根据需要执行的SQL语的类型不同 使用 inset delete update select
+
+-->
+<mapper namespace="cn.tedu.csmall.server.mapper.BrandMapper">
+    <!--    int  insert(Brand brand);-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_brand(name, pinyin, logo, description, keywords,
+                              sort, sales, product_count, comment_count, positive_comment_count,
+                              enable, gmt_create, gmt_modified)
+        values (#{name}, #{pinyin}, #{logo}, #{description}, #{keywords},
+                #{sort}, #{sales}, #{productCount}, #{commentCount}, #{positiveCommentCount},
+                #{enable}, #{gmtCreate}, #{gmtModified})
+    </insert>
+    <delete id="deleteById">
+        delete
+        from pms_brand
+        where id = #{id}
+    </delete>
+    <!-- int deleteByIds(Long... ids); -->
+    <delete id="deleteByIds">
+        delete
+        from pms_brand
+        where id in (
+        <foreach collection="array" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+    </delete>
+
+    <update id="updateById">
+        update pms_brand
+        <set>
+            <if test="name != null">
+                name=#{name},
+            </if>
+            <if test="pinyin != null">
+                pinyin=#{pinyin},
+            </if>
+            <if test="logo!= null">
+                logo=#{logo},
+            </if>
+            <if test="description!= null">
+                description=#{description},
+            </if>
+            <if test="keywords!= null">
+                keywords=#{keywords},
+            </if>
+            <if test="sort!= null">
+                sort=#{sort},
+            </if>
+            <if test="sales!= null">
+                sales=#{sales},
+            </if>
+            <if test="productCount!= null">
+                product_count=#{productCount},
+            </if>
+            <if test="commentCount!= null">
+                comment_count=#{commentCount},
+            </if>
+            <if test="positiveCommentCount!= null">
+                positive_comment_count=#{positiveCommentCount},
+            </if>
+            <if test="enable!= null">
+                enable=#{enable},
+            </if>
+        </set>
+        where
+        id=#{id}
+    </update>
+
+    <select id="count" resultType="int">
+        SELECT count(*)FROM  pms_brand
+    </select>
+</mapper>

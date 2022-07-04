@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--根节点名必须是mapper
+    根节点必须配置 namespace 属性 取值为对应的接口的全限定名
+    在根节点内部 根据需要执行的SQL语的类型不同 使用 inset delete update select
+
+-->
+<mapper namespace="cn.tedu.csmall.server.mapper.SpuDetailMapper">
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into pms_spu_detail(spu_id, detail, gmt_create, gmt_modified)
+        values (#{spuId}, #{detail}, #{gmtCreate}, #{gmtModified})
+    </insert>
+    <delete id="deleteById">
+        delete
+        from pms_spu_detail
+        where id = #{id}
+    </delete>
+    <delete id="deleteByIds">
+        from pms_spu_detail
+        where id in(
+        <foreach collection="array" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+    </delete>
+
+
+</mapper>
