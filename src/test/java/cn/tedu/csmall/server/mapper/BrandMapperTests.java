@@ -1,6 +1,7 @@
 package cn.tedu.csmall.server.mapper;
 
 
+import cn.tedu.csmall.server.POJO.VO.BrandVO.BrandDetailVO;
 import cn.tedu.csmall.server.POJO.entity.Brand;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,23 +53,24 @@ public class BrandMapperTests {
     }
 
     @Test
-    public void testUpdate() {
+    public void testUpdateById() {
         Long id = 3L;
         String name = "大白菜";
         Brand brand=new Brand();
         brand.setName(name);
         brand.setId(id);
         int rows = mapper.updateNameById(name, id);
-        System.out.println("修改品牌名完成 受影响的行数" + rows);
+        System.out.println("修改品牌信息完成 受影响的行数" + rows);
     }
 
     @Test
-    public void testUpdateById(){
+    public void testUpdateNameById(){
         Long id = 3L;
         String name = "大白菜";
         Brand brand=new Brand();
         brand.setName(name);
         brand.setId(id);
+
         int rows = mapper.updateById(brand);
         System.out.println("修改品牌名完成 受影响的行数="+ rows);
     }
@@ -78,6 +80,11 @@ public class BrandMapperTests {
        int count = mapper.count();
         System.out.println("查询商品"+count);
     }
-
+    @Test
+    public void testGetById() {
+        Long id = 800L;
+        BrandDetailVO brandDetailVO = mapper.getById(id);
+        System.out.println("根据id=" + id + "查询完成，结果=" + brandDetailVO);
+    }
 
 }

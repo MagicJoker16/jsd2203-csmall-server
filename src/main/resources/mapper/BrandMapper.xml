@@ -76,6 +76,21 @@
     </update>
 
     <select id="count" resultType="int">
-        SELECT count(*)FROM  pms_brand
+        SELECT count(*)
+        FROM pms_brand
+    </select>
+
+    <select id="getById" resultType="cn.tedu.csmall.server.POJO.entity">
+
+    </select>
+
+    <select id="getById" resultType="cn.tedu.csmall.server.POJO.VO.BrandVO.BrandDetailVO">
+        SELECT id,name,pinyin,logo, description, keywords,
+               sort,sales,product_count, comment_count,
+               positive_comment_count,enable
+        FROM
+             pms_brand
+        WHERE
+              id = #{id}
     </select>
 </mapper>
