@@ -9,6 +9,7 @@
 
 -->
 <mapper namespace="cn.tedu.csmall.server.mapper.BrandMapper">
+
     <!--    int  insert(Brand brand);-->
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         insert into pms_brand(name, pinyin, logo, description, keywords,
@@ -18,11 +19,14 @@
                 #{sort}, #{sales}, #{productCount}, #{commentCount}, #{positiveCommentCount},
                 #{enable}, #{gmtCreate}, #{gmtModified})
     </insert>
+
+    <!-- int deleteById(Long id); -->
     <delete id="deleteById">
         delete
         from pms_brand
         where id = #{id}
     </delete>
+
     <!-- int deleteByIds(Long... ids); -->
     <delete id="deleteByIds">
         delete
@@ -34,6 +38,7 @@
         )
     </delete>
 
+    <!-- int updateById(Brand brand); -->
     <update id="updateById">
         update pms_brand
         <set>
@@ -75,15 +80,27 @@
         id=#{id}
     </update>
 
+    <!-- int updateNameById(@Param("id") Long id, @Param("name") String name); -->
+    <update id="updateNameById">
+        UPDATE
+            pms_brand
+        SET
+            name=#{name}
+        WHERE
+            id=#{id}
+    </update>
+
+    <!-- int count(); -->
     <select id="count" resultType="int">
-        SELECT count(*)
-        FROM pms_brand
+        SELECT count(*) FROM pms_brand
     </select>
 
-    <select id="getById" resultType="cn.tedu.csmall.server.POJO.entity">
-
+    <!-- int countByName(String name); -->
+    <select id="countByName" resultType="int">
+        SELECT count(*) FROM pms_brand WHERE name=#{name}
     </select>
 
+    <!-- BrandDetailVO getById(Long id); -->
     <select id="getById" resultMap="DetailResultMap">
         SELECT
             <include refid="DetailQueryFields"/>
@@ -93,12 +110,34 @@
             id = #{id}
     </select>
 
+    <!-- BrandDetailVO getByName(String name); -->
+    <select id="getByName" resultMap="DetailResultMap">
+        SELECT
+        <include refid="DetailQueryFields" />
+        FROM
+        pms_brand
+        WHERE
+        name=#{name}
+    </select>
+
+    <!-- List<BrandListItemVO> list(); -->
     <select id="list" resultMap="ListItemResultMap">
         SELECT
             <include refid="ListItemQueryFields"/>
         FROM
             pms_brand
         ORDER BY id
+    </select>
+
+    <!-- List<BrandListItemVO> listPage(
+          @Param("offset") Integer offset, @Param("count") Integer count); -->
+    <select id="listPage" resultMap="ListItemResultMap">
+        SELECT
+        <include refid="ListItemQueryFields" />
+        FROM
+        pms_brand
+        ORDER BY id
+        LIMIT ${offset}, ${count}
     </select>
 
     <sql id="DetailQueryFields">
@@ -109,7 +148,7 @@
         </if>
     </sql>
 
-    <resultMap id="DetailResultMap" type="cn.tedu.csmall.server.POJO.VO.BrandVO.BrandDetailVO">
+    <resultMap id="DetailResultMap" type="cn.tedu.csmall.server.POJO.VO.BrandDetailVO">
         <id column="id" property="id"/>
         <result column="product_count" property="productCount"/>
         <result column="comment_count" property="commentCount"/>
@@ -124,12 +163,10 @@
         </if>
     </sql>
 
-    <resultMap id="ListItemResultMap" type="cn.tedu.csmall.server.POJO.VO.BrandVO.BrandListItemVO">
+    <resultMap id="ListItemResultMap" type="cn.tedu.csmall.server.POJO.VO.BrandListItemVO">
         <id column="id" property="id"/>
         <result column="product_count" property="productCount"/>
         <result column="comment_count" property="commentCount"/>
         <result column="positive_comment_count" property="positiveCommentCount"/>
     </resultMap>
-
-
 </mapper>

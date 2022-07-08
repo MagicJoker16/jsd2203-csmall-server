@@ -1,11 +1,13 @@
 package cn.tedu.csmall.server.mapper;
 
 
+import cn.tedu.csmall.server.POJO.VO.AlbumDetailVO;
 import cn.tedu.csmall.server.POJO.entity.Album;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
+@Slf4j
 //bindingException异常
 //org .apache.ibatis.binding.BindingException: Invalid bound statement (not found):
 //cn.tedu.csmall.server .mapper .BrandMapper insert
@@ -50,11 +52,31 @@ public class AlbumMapperTests {
         System.out.println("批量删除完成 受影响的行数" + rows);
     }
 
+//    @Test
+//    public void testUpdate() {
+//        Long id = 3L;
+//        String name = "白萝卜";
+//        int rows = mapper.updateNameById(id, name);
+//        System.out.println("修改品牌名完成 受影响的行数" + rows);
+//    }
+
     @Test
-    public void testUpdate() {
-        Long id = 3L;
-        String name = "白萝卜";
-        int rows = mapper.updateNameById(id, name);
-        System.out.println("修改品牌名完成 受影响的行数" + rows);
+    public void testCount(){
+        int count = mapper.count();
+        System.out.println(count);
     }
+
+    @Test
+    public void testGetById() {
+        Long id = 1L;
+        AlbumDetailVO album = mapper .getById(id);
+        System.out.println("根据id=" + id + "查询完成，查询结果=" + album);
+    }
+    @Test
+    public void testCountByName() {
+        String name = "西瓜";
+        int count = mapper.countByName(name);
+        log.debug("根据名称（{}）统计品牌数量完成，统计结果={}", name, count);
+    }
+
 }

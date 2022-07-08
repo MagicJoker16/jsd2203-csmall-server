@@ -1,4 +1,4 @@
-package cn.tedu.csmall.server.POJO.VO.BrandVO;
+package cn.tedu.csmall.server.POJO.VO;
 
 import lombok.Data;
 

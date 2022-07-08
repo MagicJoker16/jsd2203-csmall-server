@@ -12,5 +12,5 @@ public interface SpuMapper {
 
     int deleteByIds(Long... id);
 
-
+    int countByName(String name);
 }

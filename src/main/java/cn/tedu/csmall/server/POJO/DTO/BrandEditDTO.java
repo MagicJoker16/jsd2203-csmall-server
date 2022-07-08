@@ -1,4 +1,4 @@
-package cn.tedu.csmall.server.POJO.DTO.Brands;
+package cn.tedu.csmall.server.POJO.DTO;
 
 import lombok.Data;
 

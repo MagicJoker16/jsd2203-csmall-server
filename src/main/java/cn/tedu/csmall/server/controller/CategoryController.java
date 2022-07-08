@@ -1,9 +1,13 @@
 package cn.tedu.csmall.server.controller;
 
-import cn.tedu.csmall.server.POJO.DTO.Category.CategoryAddNewDTO;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import cn.tedu.csmall.server.POJO.DTO.CategoryAddNewDTO;
+import cn.tedu.csmall.server.web.JsonResult;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 //需要被Spring创建对象的类型，必须：
 //1.添加组件注解
@@ -13,12 +17,17 @@ import org.springframework.web.bind.annotation.RestController;
 //Spring框架会执行"组件扫描"操作,会在某个包下查找所有的类,如果类上添加了组件注解,就会创建此类的对象
 //Spring Boot项目默认执行了组件扫描,且扫描的包就是创建项目时已经生成的包
 //组件扫描的包都是指的"根包"组件类放在此根包下的各层级子孙包也都是有效的
+@Slf4j
+@Api(tags = "5.类别管理器")
 @RestController
 @RequestMapping("/categories")
 public class CategoryController {
 
+    @Autowired
+    private CategoryController categoryService;
+
     public CategoryController() {
-        System.out.println("CategoryController的构造方法已经执行");
+        log.debug("创建控制器对象：CategoryController");
     }
 
     //在Spring MVC中，当需要接收请求时，只需要在控制器中：
@@ -37,29 +46,33 @@ public class CategoryController {
 
     //关于RequestMapping
 
+    //只允许使用Post方式提交请求 如果使用其他请求方式 将初夏405错误
+    //http://localhost:8080/categories/add-new?categoryId=1123&name=xiaomi&sort=12&enable=false&display=false&logo=xiaomi&keywords=1
+    @ApiOperation("增加类别")
+    @ApiOperationSupport(order = 100)
+    @PostMapping("/add-new")
+    public JsonResult addNew(@RequestBody CategoryAddNewDTO categoryAddNewDTO) {
+        log.debug("接收到的请求参数：{}", categoryAddNewDTO);
+        categoryService.addNew(categoryAddNewDTO);
+        return JsonResult.ok();
+    }
 
     //假设接卸来时"删除类别"的处理
     //                                           对应
     //此注解的主要作用是配置“请求路径”与"处理请求的方法”的映射关系。
     //http://localhost:8080/categories/1/delete
-    @RequestMapping("/{id:[0-9]+}/delete")
+    @ApiOperation("删除类别")
+    @PostMapping("/{id:[0-9]+}/delete")
     public String delete(@PathVariable Long id) {
         System.out.println("CategoryController.delete()");
         System.out.println("接收到的参数" + id);
         return "del";
     }
 
-    //只允许使用Post方式提交请求 如果使用其他请求方式 将初夏405错误
-    //http://localhost:8080/categories/add-new?categoryId=1123&name=xiaomi&sort=12&enable=false&display=false&logo=xiaomi&keywords=1
-    @RequestMapping("/add-new")
-    public String addNew(CategoryAddNewDTO categoryAddNewDTO) {
-        System.out.println("CategoryController.addNew()");
-        System.out.println("接收到的参数" + categoryAddNewDTO);
-        return "已经处理增加类别的请求";
-    }
 
     //http://localhost:8080/categories/1/update?categoryId=1123&name=xiaomi&sort=12&enable=false&display=false&logo=xiaomi&keywords=1
-    @RequestMapping("/{id:[0-9]+}/update")
+    @ApiOperation("修改类别")
+    @PostMapping("/{id:[0-9]+}/update")
     public String updateById(@PathVariable Long id, CategoryAddNewDTO categoryAddNewDTO) {
         System.out.println("CategoryController.updateById()");
         System.out.println("接收到的参数" + categoryAddNewDTO);
@@ -67,7 +80,8 @@ public class CategoryController {
         return "即将根据id修改类别信息(尚未完成)";
     }
 
-    @RequestMapping("/list")
+    @ApiOperation("查询类别")
+    @GetMapping("/list")
     public String xx() {
         System.out.println("CategoryController.xx");
         return "";

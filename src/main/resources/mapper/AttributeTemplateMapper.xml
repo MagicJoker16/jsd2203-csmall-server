@@ -11,24 +11,35 @@
 <mapper namespace="cn.tedu.csmall.server.mapper.AttributeTemplateMapper">
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
-        insert into pms_attributetemplate(name, pinyin, keywords,
-                                          sort, gmt_create, gmt_modified)
-        values (#{name}, #{pinyin}, #{keywords}
-                #{sort}, #{gmtCreate}, #{gmtModified})
+        INSERT INTO pms_attribute_template
+            (name, pinyin, keywords,sort)
+        values
+               (#{name}, #{pinyin}, #{keywords},#{sort})
     </insert>
+
     <delete id="deleteById">
         delete
-        from pms_attributetemplate
+        from pms_attribute_template
         where id = #{id}
     </delete>
-    <delete id="deleteByIds">
-        from pms_attributetemplate
-        where id in(
-        <foreach collection="array" item="id" separator=",">
-            #{id}
-        </foreach>
-        )
-    </delete>
+
+<!--    <delete id="deleteByIds">-->
+<!--        from pms_attribute_template-->
+<!--        where id in(-->
+<!--        <foreach collection="array" item="id" separator=",">-->
+<!--            #{id}-->
+<!--        </foreach>-->
+<!--        )-->
+<!--    </delete>-->
+
+    <select id="countByName" resultType="int">
+        SELECT
+             count(*)
+        FROM
+             pms_attribute_template
+        WHERE
+             name = #{name}
+    </select>
 
 
 </mapper>

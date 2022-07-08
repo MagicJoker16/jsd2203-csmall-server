@@ -18,11 +18,13 @@
                 #{icon}, #{enable}, #{isParent}, #{isDisplay},
                 #{gmtCreate}, #{gmtModified})
     </insert>
+
     <delete id="deleteById">
         delete
         from pms_category
         where id = #{id}
     </delete>
+
     <delete id="deleteByIds">
         from pms_category
         where id in(
@@ -33,4 +35,101 @@
     </delete>
 
 
+<!--    <update id="updateById">-->
+<!--        update pms_category-->
+<!--        <set>-->
+<!--            <if test="name != null">-->
+<!--                name=#{name},-->
+<!--            </if>-->
+<!--            <if test="pinyin != null">-->
+<!--                pinyin=#{pinyin},-->
+<!--            </if>-->
+<!--            <if test="logo!= null">-->
+<!--                logo=#{logo},-->
+<!--            </if>-->
+<!--            <if test="description!= null">-->
+<!--                description=#{description},-->
+<!--            </if>-->
+<!--            <if test="keywords!= null">-->
+<!--                keywords=#{keywords},-->
+<!--            </if>-->
+<!--            <if test="sort!= null">-->
+<!--                sort=#{sort},-->
+<!--            </if>-->
+<!--            <if test="sales!= null">-->
+<!--                sales=#{sales},-->
+<!--            </if>-->
+<!--            <if test="productCount!= null">-->
+<!--                product_count=#{productCount},-->
+<!--            </if>-->
+<!--            <if test="commentCount!= null">-->
+<!--                comment_count=#{commentCount},-->
+<!--            </if>-->
+<!--            <if test="positiveCommentCount!= null">-->
+<!--                positive_comment_count=#{positiveCommentCount},-->
+<!--            </if>-->
+<!--            <if test="enable!= null">-->
+<!--                enable=#{enable},-->
+<!--            </if>-->
+<!--        </set>-->
+<!--        where-->
+<!--        id=#{id}-->
+<!--    </update>-->
+
+<!--    <update id="updateNameById">-->
+<!--        UPDATE-->
+<!--            pms_category-->
+<!--        SET-->
+<!--            name=#{name}-->
+<!--        WHERE-->
+<!--            id = #{id}-->
+<!--    </update>-->
+
+<!--    <select id="count" resultType="int">-->
+<!--        SELECT count(*)-->
+<!--        FROM pms_category-->
+<!--    </select>-->
+
+<!--    <select id="getById" resultMap="DetailResultMap">-->
+<!--        SELECT-->
+<!--        <include refid="DetailQueryFields"/>-->
+<!--        FROM-->
+<!--        pms_category-->
+<!--        WHERE-->
+<!--        id=#{id}-->
+<!--    </select>-->
+
+<!--    <select id="list" resultMap="ListItemResultMap">-->
+<!--        SELECT-->
+<!--        <include refid="ListItemResultMap"/>-->
+<!--        FROM-->
+<!--        pms_category-->
+<!--        ORDER BY id-->
+<!--    </select>-->
+
+<!--    <sql id="DetailQueryFields">-->
+<!--        <if test="true">-->
+<!--            id, name, parent_id, depth, keywords, sort, icon, enable, is_parent, is_display-->
+<!--        </if>-->
+<!--    </sql>-->
+
+<!--    <resultMap id="DetailResultMap" type="cn.tedu.csmall.server.POJO.VO.CategoryDetailVO">-->
+<!--        <id column="id" property="id"/>-->
+<!--        <result column="parent_id" property="parentId"/>-->
+<!--        <result column="is_parent" property="isParent"/>-->
+<!--        <result column="is_display" property="isDisplay"/>-->
+<!--    </resultMap>-->
+
+<!--    <sql id="ListItemQueryFields">-->
+<!--        <if test="true">-->
+<!--            id, name, parent_id, depth, keywords, sort, icon, enable, is_parent, is_display-->
+<!--        </if>-->
+<!--    </sql>-->
+
+<!--    <resultMap id="ListItemResultMap" type="cn.tedu.csmall.server.POJO.VO.CategoryListItemVO">-->
+<!--        <id column="id" property="id"/>-->
+<!--        <result column="parent_id" property="parentId"/>-->
+<!--        <result column="is_parent" property="isParent"/>-->
+<!--        <result column="is_display" property="isDisplay"/>-->
+<!--    </resultMap>-->
 </mapper>

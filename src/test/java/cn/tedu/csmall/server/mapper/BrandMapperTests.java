@@ -1,11 +1,15 @@
 package cn.tedu.csmall.server.mapper;
 
 
-import cn.tedu.csmall.server.POJO.VO.BrandVO.BrandDetailVO;
+import cn.tedu.csmall.server.POJO.VO.BrandDetailVO;
+import cn.tedu.csmall.server.POJO.VO.BrandListItemVO;
 import cn.tedu.csmall.server.POJO.entity.Brand;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 //bindingException异常
 //org .apache.ibatis.binding.BindingException: Invalid bound statement (not found):
@@ -21,6 +25,7 @@ application . properties 中配置的mybatis.mapper-locations 属性有误
 如果十分确实以上代码都没有问题，则只可能是依赖项出错
 先检查pom.xml中的依赖代码是否正确,如果无误,则删除本地仓库并重新下载
  */
+@Slf4j
 @SpringBootTest
 public class BrandMapperTests {
 
@@ -80,6 +85,15 @@ public class BrandMapperTests {
        int count = mapper.count();
         System.out.println("查询商品"+count);
     }
+
+    @Test
+    public void testCountByName() {
+        String name = "西瓜";
+        int count = mapper.countByName(name);
+        log.debug("根据名称（{}）统计品牌数量完成，统计结果={}", name, count);
+    }
+
+
     @Test
     public void testGetById() {
         Long id = 8L;
@@ -87,6 +101,32 @@ public class BrandMapperTests {
         System.out.println("根据id=" + id + "查询完成，结果=" + brandDetailVO);
     }
 
+    @Test
+    public void testGetByName() {
+        String name = "pinyin and id < 10";
+        BrandDetailVO brandDetailVO = mapper.getByName(name);
+        System.out.println("根据name=" + name + "查询完成，结果=" + brandDetailVO);
+    }
+
+    @Test
+    public void testList() {
+        List<BrandListItemVO> list = mapper.list();
+        System.out.println("查询列表完成，结果集中的数据的数量=" + list.size());
+        for (BrandListItemVO item : list) {
+            System.out.println(item);
+        }
+    }
+
+    @Test
+    public void testListPage() {
+        Integer offset = 5;
+        Integer count = 3;
+        List<BrandListItemVO> list = mapper.listPage(offset, count);
+        System.out.println("查询列表完成，结果集中的数据的数量=" + list.size());
+        for (BrandListItemVO item : list) {
+            System.out.println(item);
+        }
+    }
 
 
 }

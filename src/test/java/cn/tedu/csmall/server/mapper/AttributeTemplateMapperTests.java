@@ -2,10 +2,11 @@ package cn.tedu.csmall.server.mapper;
 
 
 import cn.tedu.csmall.server.POJO.entity.AttributeTemplate;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
+@Slf4j
 @SpringBootTest
 public class AttributeTemplateMapperTests {
 
@@ -34,6 +35,13 @@ public class AttributeTemplateMapperTests {
     public void testDeleteByIds() {
         int rows = mapper.deleteByIds(1L, 3L, 5L, 7L, 9L);
         System.out.println("批量删除完成 受影响的行数" + rows);
+    }
+
+    @Test
+    public void testCountByName(){
+        String name = "智能手机";
+        int count = mapper.countByName(name);
+        log.debug("根据name={}查询完成,结果={}",name,count);
     }
 
     }

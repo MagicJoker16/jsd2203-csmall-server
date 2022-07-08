@@ -13,5 +13,8 @@ public interface AttributeTemplateMapper {
 
     int deleteByIds(Long... id);
 
+    int countByName(String name);
+
+
 
 }

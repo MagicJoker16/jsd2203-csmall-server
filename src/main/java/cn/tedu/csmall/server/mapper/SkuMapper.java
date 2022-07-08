@@ -9,7 +9,9 @@ public interface SkuMapper {
 
     int deleteById(Long id);
 
-    int deleteByIds(Long... id);
+    int deleteByIds(Long... ids);
+
+    int countByName(String name);
 
 
 }

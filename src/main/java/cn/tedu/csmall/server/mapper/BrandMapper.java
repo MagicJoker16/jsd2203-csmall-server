@@ -1,16 +1,22 @@
 package cn.tedu.csmall.server.mapper;
 
-import cn.tedu.csmall.server.POJO.VO.BrandVO.BrandDetailVO;
-import cn.tedu.csmall.server.POJO.VO.BrandVO.BrandListItemVO;
+import cn.tedu.csmall.server.POJO.VO.BrandDetailVO;
+import cn.tedu.csmall.server.POJO.VO.BrandListItemVO;
 import cn.tedu.csmall.server.POJO.entity.Brand;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
+/**
+ * 品牌Mapper接口
+ *
+ * @author java@tedu.cn
+ * @version 0.0.1
+ */
 @Repository//让测试类不报错
 public interface BrandMapper {
+
     /**
      * 插入品牌数据
      *
@@ -33,7 +39,7 @@ public interface BrandMapper {
      * @param ids 期望删除的若干个品牌数据的id
      * @return 受影响的行数，将返回成功删除的数据量
      */
-    int deleteByIds(Long... id);
+    int deleteByIds(Long... ids);
 
     /**
      * 根据id修改品牌信息，传入的参数应该封装了需要修改的字段值，保持为null的属性对应的字段将不会被修改，注意：必须封装id属性
@@ -51,8 +57,20 @@ public interface BrandMapper {
      */
     int updateNameById(@Param("name") String name, @Param("id") Long id);
 
-
+    /**
+     * 统计当前表中品牌数据的数量
+     *
+     * @return 当前表中品牌数据的数量
+     */
     int count();
+
+    /**
+     * 根据品牌名称统计此名称对应的品牌数据的数量
+     *
+     * @param name 品牌名称
+     * @return 此名称对应的品牌数据的数量
+     */
+    int countByName(String name);
 
     /**
      * 根据id查询品牌详情
@@ -61,7 +79,28 @@ public interface BrandMapper {
      */
     BrandDetailVO getById(Long id);
 
+    /**
+     * 根据品牌名称查询品牌详情
+     *
+     * @param name 品牌名称
+     * @return 匹配的品牌详情，如果没有匹配的数据，将返回null
+     */
+    BrandDetailVO getByName(String name);
+
+    /**
+     * 查询品牌列表
+     *
+     * @return 品牌列表的集合
+     */
     List<BrandListItemVO> list();
 
-
+    /**
+     * 分页查询品牌列表
+     *
+     * @param offset 跳过多少条记录
+     * @param count  查询多少条记录
+     * @return 品牌列表的集合
+     */
+    List<BrandListItemVO> listPage(
+            @Param("offset") Integer offset, @Param("count") Integer count);
 }
